@@ -86,6 +86,39 @@ int generatePath(char forest[][100], int n, int path[][2]) {
     return pathLength;  // Retourne la longueur du chemin
 }
 
+void crabDelete(char forest[][100], int path[][2],int crabindex, int crabs[]){
+    int x = path[crabs[crabindex]][0];
+    int y = path[crabs[crabindex]][1];
+    forest[x][y] = 'P'; // Remettre la case à la route
+    int i=1;
+    while ((crabindex+i) != -1)
+    {
+        crabs[crabindex+i-1] = crabs[crabindex+i]; // Décaler les crabes
+        i++;
+    }
+    crabs[crabindex+i-1] = -1;
+}
+
+void moveCrab(char forest[][100], int n, int path[][2], int pathLength, int crabindex, int crabs[]) {
+    int x = path[crabs[crabindex]][0];
+    int y = path[crabs[crabindex]][1];
+
+    
+    crabs[crabindex] +=1 ; // Le crabe avance d'une case
+    forest[x][y] = 'P'; // Remettre la case à la route
+    
+    x = path[crabs[crabindex]][0];
+    y = path[crabs[crabindex]][1];
+    forest[x][y] = 'R'; // Marque la case suivante comme occupée par le crabe
+
+    // Vérifie si le crabe a atteint la fin du chemin
+    if (crabindex == pathLength ) {
+        printf("Le crabe a atteint la couronne ! Victoire des crustacés !\n");
+        exit(0);
+    }
+
+}
+
 void monkeyTurn(Monkey monkeys[], int nbmonkeys, char forest[][100], int n, int path[][2], int crabs[]){
     for (int i = 0; i < nbmonkeys; i++) {
         if (monkeys[i].actif == 1) { // Si le singe est actif
@@ -141,69 +174,45 @@ void crabGenerator(char forest[][100], int path[][2], int crabs[]){
     while (crabs[i] != -1){
         i++;
     } // Trouver le premier indice vide
-    crabs[i] = 0; // Ajoute un crabe à la position de départ
-    forest[path[0][0]][path[0][1]] = 'R'; // Marque la première case comme occupée par le crabe
+    crabs[i] = 1; // Ajoute un crabe à la position de départ
+    forest[path[1][0]][path[1][1]] = 'R'; // Marque la première case comme occupée par le crabe
 }
     
-
-
-void crabDelete(char forest[][100], int path[][2],int crabindex, int crabs[]){
-    int x = path[crabs[crabindex]][0];
-    int y = path[crabs[crabindex]][1];
-    forest[x][y] = 'P'; // Remettre la case à la route
-    crabindex=-1; // Le crabe est éliminé
-    
-    while ((crabindex+1) != -1)
-    {
-        crabs[crabindex] = crabs[crabindex+1]; // Décaler les crabes
-        crabindex++;
-    }
-}
 
 void crabTurn(char forest[][100], int n, int path[][2], int pathLength, int crabs[]){
     int i=0;
         while(crabs[i] != -1){
-            moveCrab(forest, n, path, pathLength,crabs[i], crabs); 
+            moveCrab(forest, n, path, pathLength,crabs[i], crabs);
+            printf("Crabe %d a avancé\n", i);
             i++;
         }
 
 }
 
-void moveCrab(char forest[][100], int n, int path[][2], int pathLength, int crabindex, int crabs[]) {
-    int x = path[crabs[crabindex]][0];
-    int y = path[crabs[crabindex]][1];
-
-    
-    crabs[crabindex] +=1 ; // Le crabe avance d'une case
-    forest[x][y] = 'P'; // Remettre la case à la route
-    
-    x = path[crabs[crabindex]][0];
-    y = path[crabs[crabindex]][1];
-    forest[x][y] = 'R'; // Marque la case suivante comme occupée par le crabe
-
-    // Vérifie si le crabe a atteint la fin du chemin
-    if (crabindex == pathLength ) {
-        printf("Le crabe a atteint la couronne ! Victoire des crustacés !\n");
-        exit(0);
-    }
-
-}
 
 void crabWave(char forest[][100], int crabNumber, int n, int path[][2], int pathLength, int crabs[], int nbMonkeys, Monkey monkeys[]){
+    int crabalive = 1; // Variable pour vérifier si au moins un crabe est vivant
     crabGenerator(forest, path, crabs); // on génère un premier crabe
+    printf("premier crabe posé\n");
+    printForest(forest, n);
     int count=1;
     crabTurn(forest, n, path, pathLength, crabs);
+    printf("crabeturn\n");
     monkeyTurn(monkeys, nbMonkeys, forest, n, path, crabs); // on fait jouer les singes
-    while (crabs[0]!= -1) { // tant que tout les crabes ne sont pas éliminés
-        while (count <= crabNumber) {
-            if (rand() % 3 == 0){
+    printf("monkeyturn\n");
+
+    while (count < crabNumber || crabalive) {
+            if ((rand() % 3 == 0) && (count < crabNumber)) {
                 crabGenerator(forest, path, crabs);
                 count++;
             } // on espace les crabes de façon aléatoire
-        }
         sleep(1);
         crabTurn(forest, n, path, pathLength, crabs); // on fait avancer les crabes
+        printForest(forest, n);
         monkeyTurn(monkeys, nbMonkeys, forest, n, path, crabs); // on fait jouer les singes
+            if (crabs[0] == -1){
+                crabalive = 0;
+            }
     }
 }
 
@@ -227,7 +236,14 @@ int main() {
         printForest(forest, n);
     
 
-        int crabs[100] = {-1}; // Tableau pour suivre les positions des crabes, initialisé à -1
+        int crabs[100]; // Tableau pour suivre les positions des crabes, initialisé à -1
+        for (int i=0; i<100; i++){
+            crabs[i] = -1; // Initialiser tous les crabes à -1
+        }
+        
+
+
+
         int crabCount;
         Monkey monkeys[100];
         for (int i = 0; i < 100; i++) {
