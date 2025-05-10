@@ -1,0 +1,9 @@
+
++----------------------------------+
+|          Vague terminée          |
++----------------------------------+
+|  1. continuer (vague suivante)   |
+|  2. magasin                      |
+|  3. sauvegarder et quitter       |
+|  4. quitter sans sauvegarder     |
++----------------------------------+

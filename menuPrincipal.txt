@@ -1,0 +1,9 @@
+
++----------------------------------+
+|          menu principal          |
++----------------------------------+
+|  1. Lancer une nouvelle partie   |
+|  2. Charger une ancienne partie  |
+|  3. Menu explication             |
+|  4. Quitter le jeu               |
++----------------------------------+
