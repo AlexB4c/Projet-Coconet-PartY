@@ -9,4 +9,4 @@ Ensuite, écrire ./Coconut pour pouvoir lancer le jeu.
 On se retrouve dans le menu principal où un gentil singe va nous proposer plusieurs choix. (Menu explain pour plus d'info sur le jeu)
 Il vous reste plus qu'à profiter du jeu ( à consommer sans modération).
 
-PS: Pour votre santé mangez au moins 5 fruits et légumes par jour ! ( 5 raisins ça ne compte pas )
+PS: Pour votre santé mangez au moins 5 fruits  et légumes par jour ! ( 5 raisins ça ne compte pas )
