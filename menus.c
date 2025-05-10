@@ -20,13 +20,13 @@ void menuVague(char forest[][100], int n, int path[][2], int pathLength, int cra
     do{
         system("clear"); // Clear the terminal screen
         if (*vague > 9) {
-            menuFin(); //partie finie
+            menuFin(); //game over
         }
         printForest(forest, n); // Print the forest
         printMenu("menuVague.txt"); // Print the menu from the file
         printf("\n--- Vague actuelle %d ---\n", *vague + 1);
 
-        printf("\n Enter your choice: ");
+        printf("\n entrez votre choix: ");
         scanf("%d", &choice); // Get user input
 
         switch (choice) {
@@ -45,11 +45,11 @@ void menuVague(char forest[][100], int n, int path[][2], int pathLength, int cra
                 printf("Partie sauvegardée sous le nom %s\n", saveName);
                 exit(0); // Exit the program
                 break;
-            case 4: //qui without saving
+            case 4: //quit without saving
                 exit(0); // Exit the program
                 break;
             default:
-                printf("Invalid choice. Please try again.\n");
+                printf("choix invalide réessayer\n");
                 break;
         }
     }while(choice != 1 && choice != 2 && choice != 3 && choice != 4);
@@ -95,7 +95,7 @@ void mainMenu(char forest[][100], int n, int path[][2], int pathLength, int crab
     do{
         printf("\n Enter your choice: ");
         scanf("%d", &choice); // Get user input
-    }while(choice < 1 || choice > 5);
+    }while(!(choice >= 1 && choice <= 5));
 
     switch (choice) {
         case 1: // new game
@@ -112,7 +112,7 @@ void mainMenu(char forest[][100], int n, int path[][2], int pathLength, int crab
             int valide = 0;
             do{
                 int x, y; 
-                printf("placez votre premier singe (x y):\n");
+                printf("placez votre premier singe (ligne colonne):\n");
                 scanf("%d %d", &x, &y);
                 if (x >= 0 && x < n && y >= 0 && y < n) {
                     if (forest[x][y] != 'P') {
@@ -159,7 +159,7 @@ void mainMenu(char forest[][100], int n, int path[][2], int pathLength, int crab
             printf("😡 Arrêtez de chercher des bugs !\n"); // Exit the program
             break;
         default:
-            printf("Invalid choice. Please try again.\n");
+            printf("choix invalide réessayer\n");
             break;
     }
 }
@@ -169,7 +169,7 @@ void explainMenu() {
     printMenu("explain.txt"); // Print the explanation from the file
 
 
-    printf("\nPress any key to continue...");
+    printf("\nappuyer sur entrer pour continuer...\n");
     getchar(); // Wait for user input
     getchar(); // To handle the newline left by previous scanf
 
@@ -202,14 +202,13 @@ void magasin(int *money, int *nbMonkeys, Monkey monkeys[], char forest[][100], i
         int x, y;
         int valide = 0;
         do{
-            printf("Entrez les coordonnées du singe (x y) : ");
+            printf("Entrez les coordonnées du singe (ligne colonne) : ");
             scanf("%d %d", &x, &y);
             if(x >= 0 && x < n && y >= 0 && y < n) {
                 if (forest[x][y] != 'P' && forest[x][y] != 'M') {
                     valide = 1;
                     monkeyGenerator(forest, n, monkeys, nbMonkeys, x, y);
-                    (*nbMonkeys)++;
-                    *money -= 50; // Déduire le coût du singe
+                    *money -= 50; 
                     printf("Singe acheté avec succès !\n");
                 }else {
                     printf("Emplacement invalide (occupé ou hors limites).\n");

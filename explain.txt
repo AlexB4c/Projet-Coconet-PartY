@@ -1,7 +1,30 @@
-Lorem Ipsum
-Lorem Ipsum
-Lorem Ipsum
-Lorem Ipsum
-Lorem Ipsum
-Lorem Ipsum
-Lorem Ipsum
+Introduction (Histoire) :
+Dans une forêt tropicale dense, un groupe de crabes ambitieux tente de traverser un chemin sinueux pour atteindre une couronne précieuse, symbole de victoire. Cependant, les singes, gardiens de la forêt, sont prêts à tout pour les arrêter. Les crabes doivent avancer prudemment sur le chemin tout en évitant les attaques stratégiques des singes. Qui remportera cette bataille entre crustacés et primates ?
+
+-------------------------------------------------------------
+Comment ça fonctionne :
+Génération de la forêt :
+
+Une grille représentant une forêt (n x n) est générée, remplie d'arbres (🌴).
+Un chemin procédural (🟫) est créé, reliant le point de départ (🚩) à la couronne (👑).
+Les Crabes :
+
+Les crabes (🦀) apparaissent au début du chemin et avancent case par case.
+Chaque crabe suit le chemin prédéfini et avance à chaque tour.
+Si un crabe atteint la couronne, les crabes remportent la partie.
+Les Singes :
+
+Les singes (🐒) sont placés par le joueur à des positions stratégiques dans la forêt.
+Chaque singe a :
+Une portée : La zone autour du singe où il peut attaquer les crabes.
+Un temps de recharge : Le nombre de tours qu'il doit attendre avant de pouvoir attaquer à nouveau.
+Les singes attaquent les crabes dans leur portée, les éliminant du jeu.
+Tours de jeu :
+
+Le jeu alterne entre :
+Tour des crabes : Les crabes avancent sur le chemin.
+Tour des singes : Les singes attaquent les crabes dans leur portée si leur temps de recharge est terminé.
+Conditions de victoire :
+
+Victoire des crabes : Si un crabe atteint la couronne (👑), les crabes gagnent.
+Victoire des singes : Si tous les crabes sont éliminés avant d'atteindre la couronne, les singes gagnent.
